@@ -1,50 +1,40 @@
 import React, { Component } from 'react';
-import { Paragraph }  from './paragraph';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { clickButton } from './actions';
 import './App.css';
 
 class App extends Component {
 
-    constructor(props) {
-        super(props);
+   state = {
+       inputValue: ''
+   }
 
-        this.state = {
-            name: 'Fiap',
-            data: '2019-06-26',
-            number: {
-                prop: 200
-            }
-        };
-
-        this.updateState = this.updateState.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    updateState() {
-        this.setState({name: 'Rodrigo'});
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-    }
-
-    handleChange(event) {
-        this.setState({name: event.target.value})
+    inputChange = (event) => {
+        this.setState({
+           inputValue: event.target.value
+        });
     }
 
     render() {
+        const { newValue, clickButton } = this.props;
+        const { inputValue } = this.state;
+
         return (
             <form className="App" style={{ paddingTop: '10px' }}>
-                <input type='text' value={this.state.name} onChange={this.handleChange}/>
-
-                <button type='submit' onSubmit={() => this.handleSubmit()}>Submit me!</button>
-                <button onClick={this.updateState}>Click me!</button>
-
-                <h1>{ this.state.data }</h1>
-                <Paragraph text={this.state.number.prop}/>
-                <Paragraph text={this.state.name}/>
+                <input type='text' value={inputValue} onChange={this.inputChange}/>
+                <button type='button' onClick={() => clickButton(inputValue)} >Submit me!</button>
+                <h1>{newValue}</h1>
             </form>
         )
     }
 
 }
-export default App;
+
+const mapStateToProps = store => ({
+    newValue: store.clickState.newValue
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({clickButton}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

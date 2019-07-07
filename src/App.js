@@ -25,8 +25,6 @@ class App extends Component {
                 <input type='text' value={inputValue} onChange={this.inputChange}/>
                 <button type='button' onClick={() => clickButton(inputValue)} >Submit me!</button>
 
-                <h1>{newValue}</h1>
-
                 <Title data={newValue}/>
             </form>
         )

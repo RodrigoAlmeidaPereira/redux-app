@@ -6,11 +6,3 @@ export const clickButton = value => (
         newValue: value
     }
 );
-
-
-export const clickButtonClear = value => (
-    {
-        type: CLICK_CLEAR_VALUE,
-        newValue: value
-    }
-);
